@@ -1,60 +1,54 @@
 <?php
-// src/Blogger/BlogBundle/Entity/Blog.php
 
 namespace Blogger\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="blog")
- * @ORM\HasLifecycleCallbacks()
+ * Blog
  */
 class Blog
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @var integer
      */
-    protected $id;
+    private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @var string
      */
-    protected $title;
+    private $title;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @var string
      */
-    protected $author;
+    private $author;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string
      */
-    protected $blog;
+    private $blog;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @var string
      */
-    protected $image;
+    private $image;
 
     /**
-     * @ORM\Column(type="text")
+     * @var string
      */
-    protected $tags;
-
-    protected $comments;
+    private $tags;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @var \DateTime
      */
-    protected $created;
+    private $created;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @var \DateTime
      */
-    protected $updated;
+    private $updated;
+
 
     /**
      * Get id
@@ -225,19 +219,5 @@ class Blog
     public function getUpdated()
     {
         return $this->updated;
-    }
-    
-    public function __construct()
-    {
-        $this->setCreated(new \DateTime());
-        $this->setUpdated(new \DateTime());
-    }
-    
-        /**
-     * @ORM\preUpdate
-     */
-    public function setUpdatedValue()
-    {
-       $this->setUpdated(new \DateTime());
     }
 }
