@@ -5,6 +5,7 @@ namespace Blogger\BlogBundle\Controller;
 
 use Blogger\BlogBundle\Entity\Enquiry;
 
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 // Importa el nuevo espacio de nombres
 
@@ -14,7 +15,15 @@ class PageController extends Controller
 {
     public function indexAction()
     {
-        return $this->render('BloggerBlogBundle:Page:index.html.twig');
+        $em = $this->getDoctrine()
+                   ->getManager();
+
+        $blogs = $em->getRepository('BloggerBlogBundle:Blog')
+                    ->getLatestBlogs();
+
+        return $this->render('BloggerBlogBundle:Page:index.html.twig', array(
+            'blogs' => $blogs
+        ));
     }
     
     public function aboutAction()

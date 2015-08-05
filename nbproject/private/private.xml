@@ -12,17 +12,17 @@
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Page/contactEmail.txt.twig</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Page/about.html.twig</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/base.html.twig</file>
-            <file>file:/home/choy/Documents/blogTutorial/app/Resources/views/default/index.html.twig</file>
             <file>file:/home/choy/Documents/blogTutorial/app/config/config_test.yml</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Entity/Blog.php</file>
             <file>file:/home/choy/Documents/blogTutorial/app/AppKernel.php</file>
+            <file>file:/home/choy/Documents/blogTutorial/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Entity/Enquiry.php</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Controller/BlogController.php</file>
+            <file>file:/home/choy/Documents/blogTutorial/app/autoload.php</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Page/index.html.twig</file>
             <file>file:/home/choy/Documents/blogTutorial/app/config/config.yml</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/public/css/blog.css</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Form/EnquiryType.php</file>
-            <file>file:/home/choy/Documents/blogTutorial/app/config/routing.yml</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Controller/PageController.php</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/DataFixtures/ORM/BlogFixtures.php</file>
             <file>file:/home/choy/Documents/blogTutorial/app/Resources/views/base.html.twig</file>

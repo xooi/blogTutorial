@@ -1,25 +1,25 @@
 # src/Blogger/BlogBundle/Resources/config/routing.yml
 BloggerBlogBundle_homepage:
-    pattern:  /
+    path:  /
     defaults: { _controller: BloggerBlogBundle:Page:index }
     requirements:
-        _method:  GET
+        methods:  GET
         
 BloggerBlogBundle_about:
-    pattern:  /about
+    path:  /about
     defaults: { _controller: BloggerBlogBundle:Page:about }
     requirements:
-        _method:  GET
+        methods:  GET
         
 BloggerBlogBundle_contact:
-    pattern:  /contact
+    path:  /contact
     defaults: { _controller: BloggerBlogBundle:Page:contact }
     requirements:
-        _method:  GET|POST
+        methods:  GET|POST
         
 BloggerBlogBundle_blog_show:
-    pattern:  /{id}
+    path:  /{id}
     defaults: { _controller: BloggerBlogBundle:Blog:show }
     requirements:
-        _method:  GET
+        methods:  GET
         id: \d+

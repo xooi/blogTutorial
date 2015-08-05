@@ -1,54 +1,80 @@
 <?php
+// src/Blogger/BlogBundle/Entity/Blog.php
 
 namespace Blogger\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Blog
+ * @ORM\Entity(repositoryClass="Blogger\BlogBundle\Repository\BlogRepository")
+ * @ORM\Table(name="blog")
+ * * @ORM\HasLifecycleCallbacks()
  */
 class Blog
 {
     /**
-     * @var integer
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
-     * @var string
+     * @ORM\Column(type="string")
      */
-    private $title;
+    protected $title;
 
     /**
-     * @var string
+     * @ORM\Column(type="string", length=100)
      */
-    private $author;
+    protected $author;
 
     /**
-     * @var string
+     * @ORM\Column(type="text")
      */
-    private $blog;
+    protected $blog;
 
     /**
-     * @var string
+     * @ORM\Column(type="string", length=20)
      */
-    private $image;
+    protected $image;
 
     /**
-     * @var string
+     * @ORM\Column(type="text")
      */
-    private $tags;
+    protected $tags;
 
     /**
-     * @var \DateTime
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="blog")
      */
-    private $created;
+    protected $comments;
 
     /**
-     * @var \DateTime
+     * @ORM\Column(type="datetime")
      */
-    private $updated;
+    protected $created;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $updated;
+    
+        public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+        
+        $this->setCreated(new \DateTime());
+        $this->setUpdated(new \DateTime());
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function setUpdatedValue()
+    {
+       $this->setUpdated(new \DateTime());
+    }
 
     /**
      * Get id
@@ -124,9 +150,13 @@ class Blog
      *
      * @return string 
      */
-    public function getBlog()
+    public function getBlog($length = null)
     {
-        return $this->blog;
+        if (false === is_null($length) && $length > 0) {
+            return substr($this->blog, 0, $length);
+        } else {
+            return $this->blog;
+        }
     }
 
     /**
@@ -219,5 +249,39 @@ class Blog
     public function getUpdated()
     {
         return $this->updated;
+    }
+    
+
+    /**
+     * Add comments
+     *
+     * @param \Blogger\BlogBundle\Entity\Comment $comments
+     * @return Blog
+     */
+    public function addComment(\Blogger\BlogBundle\Entity\Comment $comments)
+    {
+        $this->comments[] = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Blogger\BlogBundle\Entity\Comment $comments
+     */
+    public function removeComment(\Blogger\BlogBundle\Entity\Comment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }
