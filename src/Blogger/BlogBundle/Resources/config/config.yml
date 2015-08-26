@@ -4,3 +4,15 @@
 parameters:
     # dirección de correo electrónico para contacto del Blogger
     blogger_blog.emails.contact_email: patrickbateman991@gmail.com
+    
+    # Blogger máximo de comentarios recientes
+    blogger_blog.comments.latest_comment_limit: 10
+    
+    stof_doctrine_extensions:
+    default_locale: en
+    translation_fallback: true
+    orm:
+        default:
+            tree: true
+            timestampable: true
+            sluggable: true

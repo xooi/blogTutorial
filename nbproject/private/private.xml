@@ -1,31 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/Blogger/BlogBundle/Controller/BlogController.php</url>
+            <bookmark id="1">
+                <name/>
+                <line>17</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/config/routing.yml</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/DataFixtures/ORM/CommentFixtures.php</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/config/config.yml</file>
-            <file>file:/home/choy/Documents/blogTutorial/composer.json</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Blog/show.html.twig</file>
             <file>file:/home/choy/Documents/blogTutorial/app/config/parameters.yml</file>
-            <file>file:/home/choy/Documents/blogTutorial/app/config/config_dev.yml</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Page/contactEmail.txt.twig</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Page/about.html.twig</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/base.html.twig</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Repository/BlogRepository.php</file>
+            <file>file:/home/choy/Documents/blogTutorial/app/AppKernel.php</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Form/CommentType.php</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Controller/CommentController.php</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Controller/BlogController.php</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Comment/index.html.twig</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/public/css/blog.css</file>
+            <file>file:/home/choy/Documents/blogTutorial/app/config/parameters.yml.dist</file>
+            <file>file:/home/choy/Documents/blogTutorial/app/config/routing.yml</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/DataFixtures/ORM/BlogFixtures.php</file>
+            <file>file:/home/choy/Documents/blogTutorial/app/config/routing_dev.yml</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/config/routing.yml</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Comment/form.html.twig</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Repository/CommentRepository.php</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Page/sidebar.html.twig</file>
+            <file>file:/home/choy/Documents/blogTutorial/app/config/config_dev.yml</file>
+            <file>file:/home/choy/Documents/blogTutorial/app/config/config_prod.yml</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/public/css/sidebar.css</file>
+            <file>file:/home/choy/Documents/blogTutorial/app/config/security.yml</file>
             <file>file:/home/choy/Documents/blogTutorial/app/config/config_test.yml</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Entity/Blog.php</file>
-            <file>file:/home/choy/Documents/blogTutorial/app/AppKernel.php</file>
-            <file>file:/home/choy/Documents/blogTutorial/vendor/symfony/symfony/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Comment/create.html.twig</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Entity/Enquiry.php</file>
-            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Controller/BlogController.php</file>
-            <file>file:/home/choy/Documents/blogTutorial/app/autoload.php</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Twig/Extensions/BloggerBlogExtension.php</file>
+            <file>file:/home/choy/Documents/blogTutorial/vendor/doctrine/orm/lib/Doctrine/ORM/EntityRepository.php</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Page/index.html.twig</file>
             <file>file:/home/choy/Documents/blogTutorial/app/config/config.yml</file>
-            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/public/css/blog.css</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Form/EnquiryType.php</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/config/services.yml</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Controller/PageController.php</file>
-            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/DataFixtures/ORM/BlogFixtures.php</file>
-            <file>file:/home/choy/Documents/blogTutorial/app/Resources/views/base.html.twig</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Entity/Comment.php</file>
+            <file>file:/home/choy/Documents/blogTutorial/app/config/services.yml</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Page/contact.html.twig</file>
         </group>
     </open-files>
