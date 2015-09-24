@@ -29,4 +29,17 @@ BloggerBlogBundle_comment_create:
     defaults: { _controller: BloggerBlogBundle:Comment:create }
     requirements:
         _method:  POST
-        blog_id: \d+                
+        blog_id: \d+ 
+        
+BloggerBlogBundle_post:
+    pattern:  /post
+    defaults: { _controller: BloggerBlogBundle:Post:create }
+    requirements:
+        _method:  GET|POST
+        
+#BloggerBlogBundle_post_create:
+#    pattern:  /post/{post_id}
+#   defaults: { _controller: BloggerBlogBundle:Post:create }
+#    requirements:
+#        _method:  POST
+#        post_id: \d+        

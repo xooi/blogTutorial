@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- http://phpunit.de/manual/4.1/en/appendixes.configuration.html -->
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.1/phpunit.xsd"
-         backupGlobals="false"
-         colors="true"
-         bootstrap="bootstrap.php.cache"
->
+<!-- http://www.phpunit.de/manual/current/en/appendixes.configuration.html -->
+<phpunit
+    backupGlobals               = "false"
+    backupStaticAttributes      = "false"
+    colors                      = "true"
+    convertErrorsToExceptions   = "true"
+    convertNoticesToExceptions  = "true"
+    convertWarningsToExceptions = "true"
+    processIsolation            = "false"
+    stopOnFailure               = "false"
+    syntaxCheck                 = "false"
+    bootstrap                   = "bootstrap.php.cache" >
+
     <testsuites>
         <testsuite name="Project Test Suite">
             <directory>../src/*/*Bundle/Tests</directory>
             <directory>../src/*/Bundle/*Bundle/Tests</directory>
-            <directory>../src/*Bundle/Tests</directory>
+            <directory>../vendor/mopa/bootstrap-bundle/Mopa/Bundle/BootstrapBundle/Tests</directory>
+            <directory>../vendor/mopa/bootstrap-sandbox-bundle/Mopa/Bundle/BootstrapSandboxBundle/Tests</directory>
         </testsuite>
     </testsuites>
 
@@ -24,9 +31,9 @@
     <filter>
         <whitelist>
             <directory>../src</directory>
+            <directory>../vendor/mopa/bootstrap-bundle/Mopa/Bundle/BootstrapBundle/Tests</directory>
+            <directory>../vendor/mopa/bootstrap-sandbox-bundle/Mopa/Bundle/BootstrapSandboxBundle/Tests</directory>
             <exclude>
-                <directory>../src/*Bundle/Resources</directory>
-                <directory>../src/*Bundle/Tests</directory>
                 <directory>../src/*/*Bundle/Resources</directory>
                 <directory>../src/*/*Bundle/Tests</directory>
                 <directory>../src/*/Bundle/*Bundle/Resources</directory>
@@ -34,4 +41,5 @@
             </exclude>
         </whitelist>
     </filter>
+
 </phpunit>

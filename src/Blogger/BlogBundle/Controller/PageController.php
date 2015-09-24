@@ -83,6 +83,11 @@ class PageController extends Controller
         'tags' => $tagWeights
     ));
     } 
+    
+    public function postAction()
+    {
+    return $this->render('BloggerBlogBundle:Post:show.html.twig');
+    }
 }
 /* 
  * To change this license header, choose License Headers in Project Properties.

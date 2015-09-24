@@ -4,7 +4,11 @@
 namespace Blogger\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * @ORM\Entity(repositoryClass="Blogger\BlogBundle\Repository\BlogRepository")
@@ -65,6 +69,49 @@ class Blog
      */
     protected $slug;
     
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('title', new NotBlank(array(
+            'message' => 'You must enter a title'
+        )));
+        $metadata->addPropertyConstraint('author', new NotBlank(array(
+            'message' => 'You must enter a author'
+        )));
+        $metadata->addPropertyConstraint('blog', new NotBlank(array(
+            'message' => 'You must enter the text'
+        )));
+        $metadata->addPropertyConstraint('blog', new Length(array('min'=>50)));
+    }
+    
+    public function slugify($text)
+    {
+    // sustituye caracteres de espaciado o dígitos con un -
+    $text = preg_replace('#[^\\pL\d]+#u', '-', $text);
+
+    // recorta espacios en ambos extremos
+    $text = trim($text, '-');
+
+
+    // translitera
+    if (function_exists('iconv'))
+    {
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+    }
+
+    // cambia a minúsculas
+    $text = strtolower($text);
+
+    // elimina caracteres indeseables
+    $text = preg_replace('#[^-\w]+#', '', $text);
+
+    if (empty($text))
+    {
+        return 'n-a';
+    }
+
+    return $text;
+    }
+    
         public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -99,9 +146,9 @@ class Blog
      */
     public function setTitle($title)
     {
-        $this->title = $title;
+    $this->title = $title;
 
-        return $this;
+    $this->setSlug($this->title);
     }
 
     /**
@@ -303,9 +350,7 @@ class Blog
      */
     public function setSlug($slug)
     {
-        $this->slug = $slug;
-
-        return $this;
+    $this->slug = $this->slugify($slug);
     }
 
     /**
@@ -317,6 +362,5 @@ class Blog
     {
         return $this->slug;
     }
-    
     
 }

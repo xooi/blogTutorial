@@ -1,0 +1,17 @@
+{# src/Blogger/BlogBundle/Resources/views/Post/show.html.twig #}
+{% extends 'BloggerBlogBundle::base.html.twig' %}
+
+{% block title %}Post{% endblock%}
+
+{% block body %}
+    <header>
+        <h1>Post in symblog</h1>
+    </header>
+
+    {% for flashMessage in app.session.flashbag.get('post-notice') %}
+    {{ flashMessage }}
+    {% endfor %}
+    
+    <p>Want to post in symblog?</p>
+    {% include 'BloggerBlogBundle:Post:form.html.twig' with { 'form': form } %}
+{% endblock %}

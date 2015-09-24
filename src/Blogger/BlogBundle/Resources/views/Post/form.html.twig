@@ -1,0 +1,15 @@
+{# src/Blogger/BlogBundle/Resources/views/Post/form.html.twig #}
+
+<form action="{{ path('BloggerBlogBundle_post') }}" method="post" {{ form_enctype(form) }} class="blogger">
+    {{ form_widget(form) }}
+    <p>
+        <input type="submit" value="Submit">
+    </p>
+    {#As of now your form is missing with the csrf token field,
+    if you use the twig form functions to render your form like form(form) 
+    this will automatically renders the csrf token field for you but your code 
+    show your are rendering your form with raw html for form like <form></form>
+    then you have to manually render the field
+    or simply add {{ form_rest(form) }} before closing tag of form #}
+    {{ form_rest(form) }}
+</form>

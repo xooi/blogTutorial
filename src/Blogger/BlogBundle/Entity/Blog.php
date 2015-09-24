@@ -4,7 +4,11 @@
 namespace Blogger\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * @ORM\Entity(repositoryClass="Blogger\BlogBundle\Repository\BlogRepository")
@@ -64,6 +68,20 @@ class Blog
      * @ORM\Column(type="string")
      */
     protected $slug;
+    
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('title', new NotBlank(array(
+            'message' => 'You must enter a title'
+        )));
+        $metadata->addPropertyConstraint('author', new NotBlank(array(
+            'message' => 'You must enter a author'
+        )));
+        $metadata->addPropertyConstraint('blog', new NotBlank(array(
+            'message' => 'You must enter the text'
+        )));
+        $metadata->addPropertyConstraint('blog', new Length(array('min'=>50)));
+    }
     
     public function slugify($text)
     {
@@ -344,6 +362,5 @@ class Blog
     {
         return $this->slug;
     }
-    
     
 }
