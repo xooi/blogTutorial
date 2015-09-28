@@ -20,10 +20,12 @@
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Controller/CommentController.php</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Post/form.html.twig</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Controller/PostController.php</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Form/PictureType.php</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Controller/BlogController.php</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Comment/index.html.twig</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/DataFixtures/ORM/BlogFixtures.php</file>
             <file>file:/home/choy/Documents/blogTutorial/app/Resources/views/base.html.twig</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Entity/Picture.php</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/config/routing.yml</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Comment/form.html.twig</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Page/sidebar.html.twig</file>

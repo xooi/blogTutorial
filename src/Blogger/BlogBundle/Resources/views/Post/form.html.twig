@@ -3,6 +3,9 @@
 <form action="{{ path('BloggerBlogBundle_post') }}" method="post" {{ form_enctype(form) }} class="blogger">
     {{ form_widget(form) }}
     <p>
+        <input type="submit" value="Upload Image" />
+    </p>
+    <p>
         <input type="submit" value="Submit">
     </p>
     {#As of now your form is missing with the csrf token field,

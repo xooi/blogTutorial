@@ -7,84 +7,54 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Blogger\BlogBundle\Entity\Blog;
 use Blogger\BlogBundle\Form\BlogType;
 
+use Blogger\BlogBundle\Entity\Picture;
+use Blogger\BlogBundle\Form\PictureType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 /**
  * Comment controller.
  */
 class PostController extends Controller
 {
-    /*public function newAction($blog_id)
-    {
-        $blog = $this->getBlog($blog_id);
-
-        $comment = new Comment();
-        $comment->setBlog($blog);
-        $form   = $this->createForm(new CommentType(), $comment);
-
-        return $this->render('BloggerBlogBundle:Comment:form.html.twig', array(
-            'comment' => $comment,
-            'form'   => $form->createView()
-        ));
-    }
-
-    public function createAction($blog_id)
-    {
-        $blog = $this->getBlog($blog_id);
-
-        $comment  = new Comment();
-        $comment->setBlog($blog);
-        $request = $this->getRequest();
-        $form    = $this->createForm(new CommentType(), $comment);
-        $form->bindRequest($request);
-
-        if ($form->isValid()) {
-            // PENDIENTE: Persistir la entidad comentario
-
-            return $this->redirect($this->generateUrl('BloggerBlogBundle_blog_show', array(
-                'id' => $comment->getBlog()->getId())) .
-                '#comment-' . $comment->getId()
-            );
-        }
-
-        return $this->render('BloggerBlogBundle:Comment:create.html.twig', array(
-            'comment' => $comment,
-            'form'    => $form->createView()
-        ));
-    }
-
-    protected function getBlog($blog_id)
-    {
-        $em = $this->getDoctrine()
-                    ->getEntityManager();
-
-        $blog = $em->getRepository('BloggerBlogBundle:Blog')->find($blog_id);
-
-        if (!$blog) {
-            throw $this->createNotFoundException('Unable to find Blog post.');
-        }
-
-        return $blog;
-    }*/
-    
     public function createAction()
     {
-    $blog = new Blog();
-    $form = $this->createForm(new BlogType(), $blog);
+        $blog = new Blog();
+        $form = $this->createForm(new BlogType(), $blog);
 
-    $request = $this->getRequest();
-    if ($request->getMethod() == 'POST') {
-        $form->bind($request);
+        $request = $this->getRequest();
+        if ($request->getMethod() == 'POST') {
+            $form->bind($request);
+            
+        $file = new Picture();
+        $form = $this->createFormBuilder($file)
+            ->add('name')
+            ->add('file')
+            ->getForm()
+        ;
+        
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+
+                $em->persist($file);
+                $em->flush();
+
+            return $this->redirect($this->generateUrl('BloggerBlogBundle_post'));
+            }
+        }
 
         if ($form->isValid()) {
             
-            $em = $this->getDoctrine()
+                $em = $this->getDoctrine()
                        ->getManager();
-            $em->persist($blog);
-            $em->flush();
+                $em->persist($blog);
+                $em->flush();
             
-            $this->get('session')->getFlashBag()->add('post-notice', 'Your post was successfully create. Thank you!');
-            // Redirige - Esto es importante para prevenir que el usuario
-            // reenvíe el formulario si actualiza la página
-            return $this->redirect($this->generateUrl('BloggerBlogBundle_post'));
+                $this->get('session')->getFlashBag()->add('post-notice', 'Your post was successfully create. Thank you!');
+                // Redirige - Esto es importante para prevenir que el usuario
+                // reenvíe el formulario si actualiza la página
+                return $this->redirect($this->generateUrl('BloggerBlogBundle_post'));
         }
     }
 
@@ -92,15 +62,37 @@ class PostController extends Controller
         'form' => $form->createView()
     ));
     }
+    //sólo me aparece el formulario del blog
+    //cómo hacer que en la plantilla twig el botón upload image sea para
+    //enviar el formulario de la imagen y el de submit para el del post entero
+    //en mi base de datos ya tengo creado el campo picture
     
-    /*public function newAction()
+    /**
+    * @Template()
+    */
+    /*public function uploadAction()
     {
-        $post = new Blog();
-        $form = $this->createForm(new BlogType(), $post);
-        
-        return $this->render('BloggerBlogBundle:Comment:form.html.twig', array(
-            'comment' => $comment,
-            'form'   => $form->createView()
+        $picture = new Picture();
+        $form = $this->createFormBuilder($file)
+            ->add('name')
+            ->add('file')
+            ->getForm()
+        ;
+
+        if ($this->getRequest()->isMethod('POST')) {
+            $form->bind($this->getRequest());
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+
+                $em->persist($file);
+                $em->flush();
+
+            return $this->redirect($this->generateUrl('BloggerBlogBundle_post'));
+            }
+        }
+
+        return $this->render('BloggerBlogBundle:Post:show.html.twig', array(
+        'form' => $form->createView()
         ));
     }*/
 }

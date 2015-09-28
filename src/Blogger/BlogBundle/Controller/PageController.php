@@ -84,10 +84,10 @@ class PageController extends Controller
     ));
     } 
     
-    public function postAction()
+    /*public function postAction()
     {
     return $this->render('BloggerBlogBundle:Post:show.html.twig');
-    }
+    }*/
 }
 /* 
  * To change this license header, choose License Headers in Project Properties.
