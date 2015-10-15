@@ -12,6 +12,11 @@
     {{ flashMessage }}
     {% endfor %}
     
+    {% for flashMessage in app.session.flashbag.get('picture-notice') %}
+    {{ flashMessage }}
+    {% endfor %}
+    
     <p>Want to post in symblog?</p>
-    {% include 'BloggerBlogBundle:Post:form.html.twig' with { 'form': form } %}
+    {% include 'BloggerBlogBundle:Post:form.html.twig' with { 'picture_form': picture_form, 'post_form': post_form} %}
+    {#{% include 'BloggerBlogBundle:Post:form.html.twig' with { 'picture_form': picture_form} %}#}
 {% endblock %}

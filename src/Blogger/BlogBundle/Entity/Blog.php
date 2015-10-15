@@ -13,7 +13,7 @@ use Symfony\Component\Validator\Constraints\Length;
 /**
  * @ORM\Entity(repositoryClass="Blogger\BlogBundle\Repository\BlogRepository")
  * @ORM\Table(name="blog")
- * * @ORM\HasLifecycleCallbacks()
+ * @ORM\HasLifecycleCallbacks()
  */
 class Blog
 {
@@ -40,7 +40,8 @@ class Blog
     protected $blog;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\OneToOne(targetEntity="Picture")
+     * @ORM\JoinColumn(name="picture_id", referencedColumnName="id")
      */
     protected $image;
 
@@ -210,16 +211,16 @@ class Blog
             return $this->blog;
         }
     }
-
+    
     /**
      * Set image
      *
-     * @param string $image
+     * @param \Blogger\BlogBundle\Entity\Picture $file
      * @return Blog
      */
-    public function setImage($image)
+    public function setImage(\Blogger\BlogBundle\Entity\Blog $file)
     {
-        $this->image = $image;
+        $this->image = $file;
 
         return $this;
     }
@@ -227,7 +228,7 @@ class Blog
     /**
      * Get image
      *
-     * @return string 
+     * @return Picture
      */
     public function getImage()
     {

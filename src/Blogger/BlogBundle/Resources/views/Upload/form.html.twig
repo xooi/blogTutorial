@@ -6,10 +6,3 @@
         <input type="submit" value="Upload Image">
     </p>  
 </form>
-
-<form id="post_form" action="{{ path('BloggerBlogBundle_create_post') }}" method="post" {{ form_enctype(post_form) }} class="blogger">
-    {{ form_rest(post_form) }}
-    <p>
-        <input type="submit" value="Post">
-    </p>
-</form>

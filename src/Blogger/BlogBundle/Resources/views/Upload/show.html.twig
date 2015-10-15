@@ -1,0 +1,17 @@
+{# src/Blogger/BlogBundle/Resources/views/Post/show.html.twig #}
+{% extends 'BloggerBlogBundle::base.html.twig' %}
+
+{% block title %}Post new blog{% endblock%}
+
+{% block body %}
+    <header>
+        <h1>First upload image in symblog</h1>
+    </header>
+
+    {% for flashMessage in app.session.flashbag.get('picture-notice') %}
+    {{ flashMessage }}
+    {% endfor %}
+    
+    <p>Select a photo for your post</p>
+    {% include 'BloggerBlogBundle:Upload:form.html.twig' with { 'picture_form': picture_form } %}
+{% endblock %}
