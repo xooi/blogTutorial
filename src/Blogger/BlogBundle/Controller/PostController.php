@@ -18,22 +18,22 @@ class PostController extends Controller
 {
     public function newAction()
     {
-        $blog = new Blog();
-        $post_form = $this->createForm(new BlogType(), $blog);
-        
+       
         $picture = new Picture();
         $picture_form = $this->createForm(new PictureType(), $picture);
         
         return $this->render('BloggerBlogBundle:Upload:show.html.twig', array(
-            'post_form' => $post_form->createView(),
+            /*'post_form' => $post_form->createView(),*/
             'picture_form' => $picture_form->createView()    
         ));        
     }
     
     public function createAction($picture_id)
     {
+        $picture = $this->getPicture($picture_id);
+        
         $blog = new Blog();
-        $blog->setImage($picture_id);
+        $blog->setImage($picture);
         $post_form = $this->createForm(new BlogType(), $blog);
 
         $request = $this->getRequest();
@@ -55,6 +55,7 @@ class PostController extends Controller
         }
 
         return $this->render('BloggerBlogBundle:Post:show.html.twig', array(
+            'picture_id'=> $picture_id,
             'post_form' => $post_form->createView()
         ));
     }
@@ -82,15 +83,25 @@ class PostController extends Controller
                 $this->get('session')->getFlashBag()->add('picture-notice', 'Your picture was successfully updated. Thank you!');
                 // Redirige - Esto es importante para prevenir que el usuario
                 // reenvíe el formulario si actualiza la página
-                return $this->redirect($this->generateUrl('BloggerBlogBundle_create_post'), array(
-                    'picture_id'    => $picture->getId(),
-                ));
+                return $this->redirect($this->generateUrl('BloggerBlogBundle_create_post', array(
+                    'picture_id'    => $picture->getId()
+                )));
             }
         }
+    }
+    
+    protected function getPicture($picture_id)
+    {
+        $em = $this->getDoctrine()
+                    ->getManager();
 
-        return $this->render('BloggerBlogBundle:Post:show.html.twig', array(
-            'picture_form' => $picture_form->createView()
-        ));
+        $picture = $em->getRepository('BloggerBlogBundle:Picture')->find($picture_id);
+
+        if (!$picture) {
+            throw $this->createNotFoundException('Unable to find Blog post.');
+        }
+
+        return $picture;
     }
     //sólo me aparece el formulario del blog
     //cómo hacer que en la plantilla twig el botón upload image sea para

@@ -33,6 +33,7 @@
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Page/sidebar.html.twig</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Repository/CommentRepository.php</file>
             <file>file:/home/choy/Documents/blogTutorial/vendor/twig/twig/lib/Twig/Loader/Filesystem.php</file>
+            <file>file:/home/choy/Documents/blogTutorial/app/Resources/views/default/index.html.twig</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Post/show.html.twig</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Entity/Blog.php</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Comment/create.html.twig</file>
@@ -40,7 +41,6 @@
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Upload/form.html.twig</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Tests/Repository/BlogRepositoryTest.php</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Page/index.html.twig</file>
-            <file>file:/home/choy/Documents/blogTutorial/app/config/config.yml</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Form/EnquiryType.php</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Controller/PageController.php</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Entity/Comment.php</file>

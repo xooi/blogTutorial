@@ -218,9 +218,9 @@ class Blog
      * @param \Blogger\BlogBundle\Entity\Picture $file
      * @return Blog
      */
-    public function setImage(\Blogger\BlogBundle\Entity\Blog $file)
+    public function setImage($picture)
     {
-        $this->image = $file;
+        $this->image = $picture;
 
         return $this;
     }

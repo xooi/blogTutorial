@@ -36,13 +36,7 @@ BloggerBlogBundle_post:
     defaults: { _controller: BloggerBlogBundle:Post:new }
     requirements:
         _methods:  GET
-        
-BloggerBlogBundle_upload:
-    path:  /upload
-    defaults: { _controller: BloggerBlogBundle:Post:upload }
-    requirements:
-        _methods:  GET|POST
-        
+              
 BloggerBlogBundle_upload_image:
   path:  /upload_image
   defaults: { _controller: BloggerBlogBundle:Post:upload }
@@ -50,7 +44,8 @@ BloggerBlogBundle_upload_image:
       _methods:  POST
       
 BloggerBlogBundle_create_post:
-  path:  /create_post
+  path:  /create_post/{picture_id}
   defaults: { _controller: BloggerBlogBundle:Post:create }
   requirements:
-      _methods:  POST      
+      _methods:  GET|POST
+      picture_id: \d+
