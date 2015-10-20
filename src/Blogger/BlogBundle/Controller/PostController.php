@@ -77,9 +77,14 @@ class PostController extends Controller
             
                 $em = $this->getDoctrine()
                        ->getManager();
+                //paco
+                $picture->getId();
+                //
                 $em->persist($picture);
                 $em->flush();
-            
+                //paco
+                //$picture->setFuncionQueMetaLaUrl("url" . $picture->getId() . ".jpg");
+                //
                 $this->get('session')->getFlashBag()->add('picture-notice', 'Your picture was successfully updated. Thank you!');
                 // Redirige - Esto es importante para prevenir que el usuario
                 // reenvíe el formulario si actualiza la página

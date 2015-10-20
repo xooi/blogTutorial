@@ -62,8 +62,7 @@ class Picture
             // store the old name to delete after the update
             $this->temp = $this->getAbsolutePath();
         } else {
-            $this->path = 'initial';
-        }
+            $this->path = '/../../../../web/uploads/documents/'.$this->id.'.jpg';        }
     }
     
     public function preUpload()
