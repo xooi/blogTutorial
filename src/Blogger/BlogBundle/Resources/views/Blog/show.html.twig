@@ -14,6 +14,11 @@
             <p>{{ blog.blog }}</p>
         </div>
     </article>
+        {# añado botón editar #}
+            <div class="continue">
+                    <a href="{{ path('BloggerBlogBundle_post', { 'blog_id' : blog.id }) }}">Editar</a>   {# pasar id del blog para mostrar formulario del blog relleno con ese post #} 
+            </div>
+        {# añado botón editar #}
             <section class="comments" id="comments">
         <section class="previous-comments">
             <h3>Comments</h3>

@@ -14,9 +14,9 @@
         <group>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/config/routing.yml</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Blog/show.html.twig</file>
-            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Page/index.html.twig</file>
-            <file>file:/home/choy/Documents/blogTutorial/app/Resources/views/default/index.html.twig</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Controller/PageController.php</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Post/form.html.twig</file>
+            <file>file:/home/choy/Documents/blogTutorial/app/Resources/views/base.html.twig</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Controller/PostController.php</file>
         </group>
     </open-files>
