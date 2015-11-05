@@ -47,7 +47,14 @@ class Picture
      *     mimeTypesMessage = "Only the filetypes(jpeg, gif and png) image are allowed."
      * )
      */
-    private $file;
+    protected $file;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="Blog", inversedBy="image")
+     * @ORM\JoinColumn(name="blog_id", referencedColumnName="id")
+     **/
+    protected $blog;
+  
 
     /**
      * Sets file.
@@ -215,5 +222,28 @@ class Picture
     public function getPath()
     {
         return $this->path;
+    }
+
+    /**
+     * Set blog
+     *
+     * @param \Blogger\BlogBundle\Entity\Blog $blog
+     * @return Picture
+     */
+    public function setBlog(\Blogger\BlogBundle\Entity\Blog $blog = null)
+    {
+        $this->blog = $blog;
+
+        return $this;
+    }
+
+    /**
+     * Get blog
+     *
+     * @return \Blogger\BlogBundle\Entity\Blog 
+     */
+    public function getBlog()
+    {
+        return $this->blog;
     }
 }

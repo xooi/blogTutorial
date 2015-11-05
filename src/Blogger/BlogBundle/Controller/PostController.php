@@ -11,6 +11,8 @@ use Blogger\BlogBundle\Entity\Picture;
 use Blogger\BlogBundle\Form\PictureType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
+use Symfony\Component\HttpFoundation\Request;
+
 /**
  * Comment controller.
  */
@@ -18,7 +20,7 @@ class PostController extends Controller
 {
     public function newAction()
     {
-       
+        
         $picture = new Picture();
         $picture_form = $this->createForm(new PictureType(), $picture);
         
@@ -30,9 +32,23 @@ class PostController extends Controller
     
     public function createAction($picture_id)
     {
+        //a partir de la picture_id obtenemos el fichero imagen
+        //la función getPicture está al final del controller
         $picture = $this->getPicture($picture_id);
         
-        $blog = new Blog();
+    //Le pasamos el id de la imagen, comprueba si existe un blog ya creado con ese id de imagen
+    //si existe, muestra el formulario(aparecerá relleno, podrémos editarlo), si no, cra un blog nuevo    
+        $em = $this->getDoctrine()
+                    ->getManager();
+        
+        $blog = $picture->getBlog();
+
+        /*$blog = $em->getRepository('BloggerBlogBundle:Blog')->findOneById($picture_id->getBlog()->getId());*/
+        
+        if($blog == null){
+           $blog = new Blog(); 
+        }
+        
         $blog->setImage($picture);
         $post_form = $this->createForm(new BlogType(), $blog);
 
@@ -64,8 +80,78 @@ class PostController extends Controller
     /**
  * @Template()
  */
+    //primer paso cuando quieres crear un post nuevo -> subir imagen
     public function uploadAction()
     {
+        $picture = new Picture();
+        $picture_form = $this->createForm(new PictureType(), $picture);
+
+        $request = $this->getRequest();
+        if ($request->getMethod() == 'POST') {
+            $picture_form->bind($request);
+
+            if ($picture_form->isValid()) {
+            
+                $em = $this->getDoctrine()
+                       ->getManager();
+                
+                $em->persist($picture);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add('picture-notice', 'Your picture was successfully updated. Thank you!');
+                // Redirige - Esto es importante para prevenir que el usuario
+                // reenvíe el formulario si actualiza la página
+                //una vez ha persistido la imagen, pasa la id de esta a la ruta create_post 
+                //que se encarga de mostrar el formulario de rellenar post
+                return $this->redirect($this->generateUrl('BloggerBlogBundle_create_post', array(
+                    'picture_id'    => $picture->getId()
+                )));
+            }
+        }
+    }
+    
+    public function upload_editAction($picture_id)
+    {
+        
+        $em = $this->getDoctrine()
+                    ->getManager();
+
+        $pictureOld = $em->getRepository('BloggerBlogBundle:Picture')->findOneById($picture_id);
+        $em->remove($pictureOld);
+        $em->flush();
+        $picture = new Picture();
+        $picture_form = $this->createForm(new PictureType(), $picture);
+
+        $request = $this->getRequest();
+        if ($request->getMethod() == 'POST') {
+            $picture_form->bind($request);
+
+            if ($picture_form->isValid()) {
+            
+                $em = $this->getDoctrine()
+                       ->getManager();
+                //paco
+                //$picture->getId();
+                //
+                $em->persist($picture);
+                $em->flush();
+                //paco
+                //$picture->setFuncionQueMetaLaUrl("url" . $picture->getId() . ".jpg");
+                //
+                $this->get('session')->getFlashBag()->add('picture-notice', 'Your picture was successfully updated. Thank you!');
+                // Redirige - Esto es importante para prevenir que el usuario
+                // reenvíe el formulario si actualiza la página
+                return $this->redirect($this->generateUrl('BloggerBlogBundle_create_post', array(
+                    'picture_id'    => $picture->getId()
+                )));
+            }
+        }
+    }
+    
+    public function editAction($blog_id)
+    {
+        /*$picture = $this->getPicture($picture_id);
+        
         $picture = new Picture();
         $picture_form = $this->createForm(new PictureType(), $picture);
 
@@ -88,11 +174,19 @@ class PostController extends Controller
                 $this->get('session')->getFlashBag()->add('picture-notice', 'Your picture was successfully updated. Thank you!');
                 // Redirige - Esto es importante para prevenir que el usuario
                 // reenvíe el formulario si actualiza la página
-                return $this->redirect($this->generateUrl('BloggerBlogBundle_create_post', array(
+                return $this->redirect($this->generateUrl('BloggerBlogBundle_edit_post', array(
                     'picture_id'    => $picture->getId()
                 )));
             }
-        }
+        }*/
+        $picture = new Picture();
+        $picture_form = $this->createForm(new PictureType(), $picture);
+        
+        return $this->render('BloggerBlogBundle:Edit:show.html.twig', array(
+            'blog_id' => $blog_id,
+            'picture_form' => $picture_form->createView()    
+        ));       
+        
     }
     
     protected function getPicture($picture_id)
@@ -108,37 +202,5 @@ class PostController extends Controller
 
         return $picture;
     }
-    //sólo me aparece el formulario del blog
-    //cómo hacer que en la plantilla twig el botón upload image sea para
-    //enviar el formulario de la imagen y el de submit para el del post entero
-    //en mi base de datos ya tengo creado el campo picture
     
-    /**
-    * @Template()
-    */
-    /*public function uploadAction()
-    {
-        $picture = new Picture();
-        $form = $this->createFormBuilder($file)
-            ->add('name')
-            ->add('file')
-            ->getForm()
-        ;
-
-        if ($this->getRequest()->isMethod('POST')) {
-            $form->bind($this->getRequest());
-            if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-
-                $em->persist($file);
-                $em->flush();
-
-            return $this->redirect($this->generateUrl('BloggerBlogBundle_post'));
-            }
-        }
-
-        return $this->render('BloggerBlogBundle:Post:show.html.twig', array(
-        'form' => $form->createView()
-        ));
-    }*/
 }

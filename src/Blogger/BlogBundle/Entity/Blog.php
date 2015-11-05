@@ -40,10 +40,9 @@ class Blog
     protected $blog;
 
     /**
-     * @ORM\OneToOne(targetEntity="Picture")
-     * @ORM\JoinColumn(name="picture_id", referencedColumnName="id")
-     */
-    protected $image;
+     * @ORM\OneToOne(targetEntity="Picture", mappedBy="blog")
+     **/
+     protected $image;
 
     /**
      * @ORM\Column(type="text")

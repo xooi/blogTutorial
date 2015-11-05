@@ -1,4 +1,4 @@
-{# src/Blogger/BlogBundle/Resources/views/Post/show.html.twig #}
+{# src/Blogger/BlogBundle/Resources/views/Post_Edit/show.html.twig #}
 {% extends 'BloggerBlogBundle::base.html.twig' %}
 
 {% block title %}Post{% endblock%}
@@ -16,6 +16,6 @@
     {{ flashMessage }}
     {% endfor %}
     
-    <p>Want to post in symblog?</p>
-    {% include 'BloggerBlogBundle:Post:form.html.twig' with { 'post_form': post_form} %}
+    <p>Edit your post</p>
+    {% include 'BloggerBlogBundle:Post_Edit:form.html.twig' with { 'blog_id': blog_id, 'post_form': post_form } %}
 {% endblock %}

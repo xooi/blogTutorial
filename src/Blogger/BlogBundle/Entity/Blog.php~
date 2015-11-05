@@ -40,10 +40,9 @@ class Blog
     protected $blog;
 
     /**
-     * @ORM\OneToOne(targetEntity="Picture")
-     * @ORM\JoinColumn(name="picture_id", referencedColumnName="id")
-     */
-    protected $image;
+     * @ORM\OneToOne(targetEntity="Picture", mappedBy="blog")
+     **/
+     public $image;
 
     /**
      * @ORM\Column(type="text")
@@ -218,9 +217,9 @@ class Blog
      * @param \Blogger\BlogBundle\Entity\Picture $file
      * @return Blog
      */
-    public function setImage(\Blogger\BlogBundle\Entity\Blog $file)
+    public function setImage($picture)
     {
-        $this->image = $file;
+        $this->image = $picture;
 
         return $this;
     }

@@ -33,19 +33,44 @@ BloggerBlogBundle_comment_create:
         
 BloggerBlogBundle_post:
     path:  /post
-    defaults: { _controller: BloggerBlogBundle:Post:new }
+    defaults: { _controller: BloggerBlogBundle:Post2:new }
     requirements:
         _methods:  GET
               
-BloggerBlogBundle_upload_image:
-  path:  /upload_image
-  defaults: { _controller: BloggerBlogBundle:Post:upload }
-  requirements:
-      _methods:  POST
+#BloggerBlogBundle_upload_image:
+#  path:  /upload_image
+#  defaults: { _controller: BloggerBlogBundle:Post:upload }
+#  requirements:
+#      _methods:  POST
       
-BloggerBlogBundle_create_post:
-  path:  /create_post/{picture_id}
-  defaults: { _controller: BloggerBlogBundle:Post:create }
+#BloggerBlogBundle_create_post:
+#  path:  /create_post/{picture_id}
+#  defaults: { _controller: BloggerBlogBundle:Post:create }
+#  requirements:
+#      _methods:  GET|POST
+#      picture_id: \d+     
+        
+#BloggerBlogBundle_upload_edit_image:
+#  path:  /upload_image/{picture_id}
+#  defaults: { _controller: BloggerBlogBundle:Post:upload_edit }
+#  requirements:
+#      _methods:  POST 
+      
+BloggerBlogBundle_create_post2:
+  path:  /create_post/
+  defaults: { _controller: BloggerBlogBundle:Post2:create }
   requirements:
       _methods:  GET|POST
-      picture_id: \d+
+      picture_id: \d+   
+      
+BloggerBlogBundle_upload_image2:
+  path:  /upload_image/{blog_id}
+  defaults: { _controller: BloggerBlogBundle:Post2:upload }
+  requirements:
+      _methods:  POST  
+      
+BloggerBlogBundle_edit_post:
+    path:  /edit_post/{blog_id}
+    defaults: { _controller: BloggerBlogBundle:Post2:edit2 }
+    requirements:
+        _methods:  GET|POST      

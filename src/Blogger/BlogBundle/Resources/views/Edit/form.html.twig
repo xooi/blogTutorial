@@ -1,6 +1,6 @@
 {# src/Blogger/BlogBundle/Resources/views/Post/form.html.twig #}
 
-<form id="picture_form" class="blogger"  action="{{ path('BloggerBlogBundle_upload_image2', { 'blog_id' : blog_id }) }}" method="post" {{ form_enctype(picture_form) }}>
+<form id="picture_form" class="blogger"  action="{{ path('BloggerBlogBundle_edit_post') }}" method="post" {{ form_enctype(picture_form) }}>
     {{ form_rest(picture_form) }}
     <p>
         <input type="submit" value="Upload Image">
