@@ -131,15 +131,45 @@ class Post2Controller extends Controller
             'picture_form' => $picture_form->createView()
         ));*/
     
-    public function editAction($blog_id)
+    public function edit_imageAction($blog_id)
     {
-        $blog = new Blog();
-        $blog_form = $this->createForm(new BlogType(), $blog);
+        $post = $this->getBlog($blog_id);
+        $picture_id = $post->getImage()->getId();
+       
         
-        return $this->render('BloggerBlogBundle:Post_Edit:show.html.twig', array(
-            'blog_id'   => $blog_id,
-            'post_form' => $blog_form->createView()    
-        ));       
+        $em = $this->getDoctrine()
+                    ->getManager();
+
+        $pictureOld = $em->getRepository('BloggerBlogBundle:Picture')->findOneById($picture_id);
+        $em->remove($pictureOld);
+        $em->flush();
+        $picture = new Picture();
+        $picture_form = $this->createForm(new PictureType(), $picture);
+
+        $request = $this->getRequest();
+        if ($request->getMethod() == 'POST') {
+            $picture_form->bind($request);
+
+            if ($picture_form->isValid()) {
+            
+                $em = $this->getDoctrine()
+                       ->getManager();
+                $em->persist($picture);
+                $em->flush();
+            
+            $this->get('session')->getFlashBag()->add('picture-notice', 'Your picture was successfully updated. Thank you!');
+
+            return $this->redirect($this->generateUrl('BloggerBlogBundle_blog_show', array(
+                 'id'    => $picture->getBlog()->getId(),
+                 'slug'  => $picture->getBlog()->getSlug()))
+            );
+        }
+        
+        return $this->render('BloggerBlogBundle:Edit:show.html.twig', array(
+            'blog_id'=> $blog_id,
+            'picture_form' => $picture_form->createView()
+        ));  
+    }
     }
     
     public function edit2Action($blog_id)
@@ -147,11 +177,12 @@ class Post2Controller extends Controller
         //Entity Manager
         $em = $this->getDoctrine()->getManager();
         
-        //Repositorios de entidades a utilizar
+        /*//Repositorios de entidades a utilizar
         $postRepository=$em->getRepository("BloggerBlogBundle:Blog");
         
         //conseguimos el objeto del Blog
-        $post = $postRepository->findOneById($blog_id);
+        $post = $postRepository->findOneById($blog_id);*/
+        $post = $this->getBlog($blog_id);
         
         //Creamos el formulario, asociado a la entidad
         $form = $this->createForm(new BlogType(), $post);
@@ -169,23 +200,25 @@ class Post2Controller extends Controller
             $tags = $form->get('tags')->getData();
             
             //Llamamos a los metodos set de la entidad y les metemos los valores del formulario
-            $post->setTitle($title);
+            /*$post->setTitle($title);
             $post->setAuthor($author);
             $post->setBlog($blog);
-            $post->setTags($tags);
+            $post->setTags($tags);*/
         }
-        
+ 
         //Si el formulario es valido tras aplicar la validacion de la entidad
         if ($form->isValid()) {
-            $post->upload();
-            $persist = $em->persist($post);
-            $flush = $em->flush();
-        
+            //$post->upload();
+            //$persist = $em->persist($post);
+            //$flush = $em->flush();
+            //$em->persist($post);
+            //$em->persist($form->getData());
+            $em->flush();
         //Mensaje flash
         $this->get('session')->getFlashBag()->add('post-notice', 'Your post was successfully edit post. Thank you!');
         
         //Redirigir a la home
-        return $this->redirect($this->generateUrl('BloggerBlogBundle_upload_image2', array(
+        return $this->redirect($this->generateUrl('BloggerBlogBundle_edit_image', array(
                     'blog_id'    => $post->getId()
                 )));
         }
@@ -207,29 +240,30 @@ class Post2Controller extends Controller
     
     public function edit_postAction($blog_id)
     {
+        //Entity Manager
+        $em = $this->getDoctrine()->getManager();
         //a partir del blog_id obtenemos blog
-        $blog = $this->getBlog($blog_id);
+        $post = $this->getBlog($blog_id);
         //creamos un nuevo formulario blog que estará relleno
-        $post_form = $this->createForm(new BlogType(), $blog);
-        
+        $form = $this->createForm(new BlogType(), $post);
+        //utilizamos el manejador de peticiones
         $request = $this->getRequest();
-        //if ($request->getMethod() == 'GET') {
-            $post_form->bind($request);
-
-            //if ($post_form->isValid()) {
-            
-                $em = $this->getDoctrine()
-                       ->getManager();
-                $em->persist($blog);
-                $em->flush();
-            
-                $this->get('session')->getFlashBag()->add('post-notice', 'Your post was successfully create. Thank you!');
-                // Redirige - Esto es importante para prevenir que el usuario
-                // reenvíe el formulario si actualiza la página
-                return $this->redirect($this->generateUrl('BloggerBlogBundle_upload_image2', array(
-                    'blog_id'    => $blog->getId()
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted()) {
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('post-notice', 'Your post was successfully edit post. Thank you!');
+            //Redirigir a la home
+            return $this->redirect($this->generateUrl('BloggerBlogBundle_edit_image', array(
+                    'blog_id'    => $post->getId()
                 )));
-            
+        }
+        
+        //Renderizar vista
+        return $this->render('BloggerBlogBundle:Post_Edit:show.html.twig', array(
+            'blog_id'  => $blog_id, 
+            'post_form' => $form->createView()
+        ));
         
     }
     
@@ -247,4 +281,5 @@ class Post2Controller extends Controller
 
         return $blog;
     }
+    
 }

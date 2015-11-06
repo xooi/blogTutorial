@@ -71,6 +71,12 @@ BloggerBlogBundle_upload_image2:
       
 BloggerBlogBundle_edit_post:
     path:  /edit_post/{blog_id}
-    defaults: { _controller: BloggerBlogBundle:Post2:edit2 }
+    defaults: { _controller: BloggerBlogBundle:Post2:edit_post }
     requirements:
-        _methods:  GET|POST      
+        _methods:  GET|POST
+        
+BloggerBlogBundle_edit_image:
+  path:  /edit_image/{blog_id}
+  defaults: { _controller: BloggerBlogBundle:Post2:edit_image }
+  requirements:
+      _methods:  GET|POST        
