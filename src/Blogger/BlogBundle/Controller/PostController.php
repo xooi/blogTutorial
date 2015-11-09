@@ -123,6 +123,7 @@ class PostController extends Controller
         $blog = $this->getBlog($blog_id);
 
         $picture  = new Picture();
+        //seteo el blog para relacionarlo
         $picture->setBlog($blog);
         $request = $this->getRequest();
         $picture_form = $this->createForm(new PictureType(), $picture);
@@ -131,7 +132,7 @@ class PostController extends Controller
         if ($picture_form->isValid()) {
             $em = $this->getDoctrine()
                        ->getManager();
-            //$em->persist($picture);
+            $em->persist($picture);
             $em->flush();
             
             $this->get('session')->getFlashBag()->add('picture-notice', 'Your picture was successfully updated. Thank you!');
