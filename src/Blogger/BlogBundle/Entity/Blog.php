@@ -40,7 +40,7 @@ class Blog
     protected $blog;
 
     /**
-     * @ORM\OneToOne(targetEntity="Picture", mappedBy="blog")
+     * @ORM\OneToOne(targetEntity="Picture", mappedBy="blog", cascade={"persist", "remove"})
      **/
      protected $image;
 

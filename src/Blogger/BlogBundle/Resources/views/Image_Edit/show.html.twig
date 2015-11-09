@@ -1,0 +1,24 @@
+{# src/Blogger/BlogBundle/Resources/views/Image_Edit/show.html.twig #}
+{% extends 'BloggerBlogBundle::base.html.twig' %}
+
+{% block title %}Post new blog{% endblock%}
+
+{% block body %}
+    <header>
+        <h1>Choose image</h1>
+    </header>
+        <img src="{{ asset(['uploads/documents/', picture_id,'.jpeg']|join) }}"/>
+    
+    {#añado botón continuar con imagen antigua #}
+           <div class="continue">
+                    <a href="{{ path('BloggerBlogBundle_blog_show', { 'id' : id, 'slug' : slug }) }}"><p>Continuar con esta imagen</p></a>   {# pasar id del blog  y el slug para mostrar el post #} 
+           </div>
+        {# añado botón editar #}
+    
+    {% for flashMessage in app.session.flashbag.get('picture-notice') %}
+    {{ flashMessage }}
+    {% endfor %}
+    
+    <p>Or select a new photo for your post</p>
+    {% include 'BloggerBlogBundle:Image_Edit:form.html.twig' with { 'blog_id' : id } %}
+{% endblock %}

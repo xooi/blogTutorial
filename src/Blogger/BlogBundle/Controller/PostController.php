@@ -18,40 +18,25 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PostController extends Controller
 {
+    //muestra el formulario post
     public function newAction()
     {
         
-        $picture = new Picture();
-        $picture_form = $this->createForm(new PictureType(), $picture);
+        $blog = new Blog();
+        $post_form = $this->createForm(new BlogType(), $blog);
         
-        return $this->render('BloggerBlogBundle:Upload:show.html.twig', array(
-            /*'post_form' => $post_form->createView(),*/
-            'picture_form' => $picture_form->createView()    
+        return $this->render('BloggerBlogBundle:Post:show.html.twig', array(
+            'post_form' => $post_form->createView()
         ));        
     }
     
-    public function createAction($picture_id)
-    {
-        //a partir de la picture_id obtenemos el fichero imagen
-        //la función getPicture está al final del controller
-        $picture = $this->getPicture($picture_id);
+    //crea el post y redirecciona a subir foto
+    public function create_postAction()
+    {      
         
-    //Le pasamos el id de la imagen, comprueba si existe un blog ya creado con ese id de imagen
-    //si existe, muestra el formulario(aparecerá relleno, podrémos editarlo), si no, cra un blog nuevo    
-        $em = $this->getDoctrine()
-                    ->getManager();
-        
-        $blog = $picture->getBlog();
-
-        /*$blog = $em->getRepository('BloggerBlogBundle:Blog')->findOneById($picture_id->getBlog()->getId());*/
-        
-        if($blog == null){
-           $blog = new Blog(); 
-        }
-        
-        $blog->setImage($picture);
+        $blog = new Blog();
         $post_form = $this->createForm(new BlogType(), $blog);
-
+        
         $request = $this->getRequest();
         if ($request->getMethod() == 'POST') {
             $post_form->bind($request);
@@ -66,141 +51,145 @@ class PostController extends Controller
                 $this->get('session')->getFlashBag()->add('post-notice', 'Your post was successfully create. Thank you!');
                 // Redirige - Esto es importante para prevenir que el usuario
                 // reenvíe el formulario si actualiza la página
-                return $this->redirect($this->generateUrl('BloggerBlogBundle_post'));
+                return $this->redirect($this->generateUrl('BloggerBlogBundle_upload_image', array(
+                    'blog_id'    => $blog->getId()
+                )));
             }
         }
+    }
+    
+    //muestra el formulario foto y la sube y relaciona con el blog
+    public function upload_imageAction($blog_id)
+    {
+        $blog = $this->getBlog($blog_id);
 
-        return $this->render('BloggerBlogBundle:Post:show.html.twig', array(
-            'picture_id'=> $picture_id,
-            'post_form' => $post_form->createView()
+        $picture  = new Picture();
+        $picture->setBlog($blog);
+        $request = $this->getRequest();
+        $picture_form = $this->createForm(new PictureType(), $picture);
+        $picture_form->bind($request);
+
+        if ($picture_form->isValid()) {
+            $em = $this->getDoctrine()
+                       ->getManager();
+            $em->persist($picture);
+            $em->flush();
+            
+            $this->get('session')->getFlashBag()->add('picture-notice', 'Your picture was successfully updated. Thank you!');
+
+            return $this->redirect($this->generateUrl('BloggerBlogBundle_blog_show', array(
+                 'id'    => $picture->getBlog()->getId(),
+                 'slug'  => $picture->getBlog()->getSlug()))
+            );
+        }
+        
+        return $this->render('BloggerBlogBundle:Image:show.html.twig', array(
+            'blog_id'=> $blog_id,
+            'picture_form' => $picture_form->createView()
+        ));
+    }
+        
+    public function edit_image_showAction($blog_id)
+    {
+        $post = $this->getBlog($blog_id);
+        $picture_id = $post->getImage()->getId();
+        
+        $picture = new Picture();
+        $picture_form = $this->createForm(new PictureType(), $picture);
+        
+        return $this->render('BloggerBlogBundle:Image_Edit:show.html.twig', array(
+            'picture_id'   => $picture_id,
+            'picture_form' => $picture_form->createView(),
+            'id'    => $blog_id,
+            'slug'  => $post->getSlug()
         ));
     }
     
-    
-    /**
- * @Template()
- */
-    //primer paso cuando quieres crear un post nuevo -> subir imagen
-    public function uploadAction()
+    public function edit_imageAction($blog_id)
     {
-        $picture = new Picture();
-        $picture_form = $this->createForm(new PictureType(), $picture);
-
-        $request = $this->getRequest();
-        if ($request->getMethod() == 'POST') {
-            $picture_form->bind($request);
-
-            if ($picture_form->isValid()) {
-            
-                $em = $this->getDoctrine()
-                       ->getManager();
-                
-                $em->persist($picture);
-                $em->flush();
-
-                $this->get('session')->getFlashBag()->add('picture-notice', 'Your picture was successfully updated. Thank you!');
-                // Redirige - Esto es importante para prevenir que el usuario
-                // reenvíe el formulario si actualiza la página
-                //una vez ha persistido la imagen, pasa la id de esta a la ruta create_post 
-                //que se encarga de mostrar el formulario de rellenar post
-                return $this->redirect($this->generateUrl('BloggerBlogBundle_create_post', array(
-                    'picture_id'    => $picture->getId()
-                )));
-            }
-        }
-    }
-    
-    public function upload_editAction($picture_id)
-    {
+        //obtengo el picture_id para poder borrar la foto antigua
+        $post = $this->getBlog($blog_id);
+        $picture_id = $post->getImage()->getId();
+       
         
         $em = $this->getDoctrine()
                     ->getManager();
-
+        //obtengo la foto y la borro
         $pictureOld = $em->getRepository('BloggerBlogBundle:Picture')->findOneById($picture_id);
         $em->remove($pictureOld);
         $em->flush();
-        $picture = new Picture();
-        $picture_form = $this->createForm(new PictureType(), $picture);
+        
+        //igual que upload_image
+        $blog = $this->getBlog($blog_id);
 
+        $picture  = new Picture();
+        $picture->setBlog($blog);
         $request = $this->getRequest();
-        if ($request->getMethod() == 'POST') {
-            $picture_form->bind($request);
+        $picture_form = $this->createForm(new PictureType(), $picture);
+        $picture_form->bind($request);
 
-            if ($picture_form->isValid()) {
-            
-                $em = $this->getDoctrine()
+        if ($picture_form->isValid()) {
+            $em = $this->getDoctrine()
                        ->getManager();
-                //paco
-                //$picture->getId();
-                //
-                $em->persist($picture);
-                $em->flush();
-                //paco
-                //$picture->setFuncionQueMetaLaUrl("url" . $picture->getId() . ".jpg");
-                //
-                $this->get('session')->getFlashBag()->add('picture-notice', 'Your picture was successfully updated. Thank you!');
-                // Redirige - Esto es importante para prevenir que el usuario
-                // reenvíe el formulario si actualiza la página
-                return $this->redirect($this->generateUrl('BloggerBlogBundle_create_post', array(
-                    'picture_id'    => $picture->getId()
-                )));
-            }
+            //$em->persist($picture);
+            $em->flush();
+            
+            $this->get('session')->getFlashBag()->add('picture-notice', 'Your picture was successfully updated. Thank you!');
+
+            return $this->redirect($this->generateUrl('BloggerBlogBundle_blog_show', array(
+                 'id'    => $picture->getBlog()->getId(),
+                 'slug'  => $picture->getBlog()->getSlug()))
+            );
         }
+        
+        return $this->render('BloggerBlogBundle:Upload:show.html.twig', array(
+            'blog_id'=> $blog_id,
+            'picture_form' => $picture_form->createView()
+        ));   
     }
     
-    public function editAction($blog_id)
+    public function edit_postAction($blog_id)
     {
-        /*$picture = $this->getPicture($picture_id);
-        
-        $picture = new Picture();
-        $picture_form = $this->createForm(new PictureType(), $picture);
-
+        //Entity Manager
+        $em = $this->getDoctrine()->getManager();
+        //a partir del blog_id obtenemos blog
+        $post = $this->getBlog($blog_id);
+        //creamos un nuevo formulario blog que estará relleno
+        $form = $this->createForm(new BlogType(), $post);
+        //utilizamos el manejador de peticiones
         $request = $this->getRequest();
-        if ($request->getMethod() == 'POST') {
-            $picture_form->bind($request);
-
-            if ($picture_form->isValid()) {
-            
-                $em = $this->getDoctrine()
-                       ->getManager();
-                //paco
-                $picture->getId();
-                //
-                $em->persist($picture);
-                $em->flush();
-                //paco
-                //$picture->setFuncionQueMetaLaUrl("url" . $picture->getId() . ".jpg");
-                //
-                $this->get('session')->getFlashBag()->add('picture-notice', 'Your picture was successfully updated. Thank you!');
-                // Redirige - Esto es importante para prevenir que el usuario
-                // reenvíe el formulario si actualiza la página
-                return $this->redirect($this->generateUrl('BloggerBlogBundle_edit_post', array(
-                    'picture_id'    => $picture->getId()
-                )));
-            }
-        }*/
-        $picture = new Picture();
-        $picture_form = $this->createForm(new PictureType(), $picture);
+        $form->handleRequest($request);
         
-        return $this->render('BloggerBlogBundle:Edit:show.html.twig', array(
-            'blog_id' => $blog_id,
-            'picture_form' => $picture_form->createView()    
-        ));       
+        if ($form->isSubmitted()) {
+            $em->flush();
+            $this->get('session')->getFlashBag()->add('post-notice', 'Your post was successfully edit post. Thank you!');
+            //Redirigir a editar imagen
+            return $this->redirect($this->generateUrl('BloggerBlogBundle_edit_image_show', array(
+                    'blog_id'    => $post->getId()
+                )));
+        }
+        
+        //Renderizar vista
+        return $this->render('BloggerBlogBundle:Post_Edit:show.html.twig', array(
+            'blog_id'  => $blog_id, 
+            'post_form' => $form->createView()
+        ));
         
     }
     
-    protected function getPicture($picture_id)
+    
+    protected function getBlog($blog_id)
     {
         $em = $this->getDoctrine()
                     ->getManager();
 
-        $picture = $em->getRepository('BloggerBlogBundle:Picture')->find($picture_id);
+        $blog = $em->getRepository('BloggerBlogBundle:Blog')->find($blog_id);
 
-        if (!$picture) {
+        if (!$blog) {
             throw $this->createNotFoundException('Unable to find Blog post.');
         }
 
-        return $picture;
+        return $blog;
     }
     
 }

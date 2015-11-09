@@ -1,4 +1,4 @@
-{# src/Blogger/BlogBundle/Resources/views/Post/show.html.twig #}
+{# src/Blogger/BlogBundle/Resources/views/Image/show.html.twig #}
 {% extends 'BloggerBlogBundle::base.html.twig' %}
 
 {% block title %}Post new blog{% endblock%}
@@ -13,5 +13,5 @@
     {% endfor %}
     
     <p>Select a photo for your post</p>
-    {% include 'BloggerBlogBundle:Upload:form.html.twig' with { 'picture_form': picture_form } %}
+    {% include 'BloggerBlogBundle:Image:form.html.twig' with { 'picture_form': picture_form } %}
 {% endblock %}

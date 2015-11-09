@@ -29,6 +29,7 @@
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Edit/form.html.twig</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Resources/views/Post_Edit/form.html.twig</file>
             <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Form/BlogType.php</file>
+            <file>file:/home/choy/Documents/blogTutorial/src/Blogger/BlogBundle/Entity/Picture.php</file>
         </group>
     </open-files>
 </project-private>
