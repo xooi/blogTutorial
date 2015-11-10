@@ -56,6 +56,9 @@ class PostController extends Controller
                 )));
             }
         }
+        return $this->render('BloggerBlogBundle:Post:show.html.twig', array(
+        'post_form' => $post_form->createView()
+        ));
     }
     
     //muestra el formulario foto y la sube y relaciona con el blog
@@ -65,9 +68,9 @@ class PostController extends Controller
 
         $picture  = new Picture();
         $picture->setBlog($blog);
-        $request = $this->getRequest();
         $picture_form = $this->createForm(new PictureType(), $picture);
-        $picture_form->bind($request);
+        $request = $this->getRequest();
+        $picture_form->handleRequest($request);
 
         if ($picture_form->isValid()) {
             $em = $this->getDoctrine()
@@ -108,38 +111,33 @@ class PostController extends Controller
     public function edit_imageAction($blog_id)
     {
         //obtengo el picture_id para poder borrar la foto antigua
-        $post = $this->getBlog($blog_id);
-        $picture_id = $post->getImage()->getId();
-       
+        $em = $this->getDoctrine()->getManager();
+        $blog = $em->getRepository('BloggerBlogBundle:Blog')->find($blog_id);       
+        $picture_id = $blog->getImage()->getId();       
         
-        $em = $this->getDoctrine()
-                    ->getManager();
+        
         //obtengo la foto y la borro
         $pictureOld = $em->getRepository('BloggerBlogBundle:Picture')->findOneById($picture_id);
         $em->remove($pictureOld);
         $em->flush();
-        
-        //igual que upload_image
-        $blog = $this->getBlog($blog_id);
+              
 
         $picture  = new Picture();
         //seteo el blog para relacionarlo
         $picture->setBlog($blog);
-        $request = $this->getRequest();
         $picture_form = $this->createForm(new PictureType(), $picture);
+        $request = $this->getRequest();
         $picture_form->bind($request);
 
         if ($picture_form->isValid()) {
-            $em = $this->getDoctrine()
-                       ->getManager();
             $em->persist($picture);
             $em->flush();
             
             $this->get('session')->getFlashBag()->add('picture-notice', 'Your picture was successfully updated. Thank you!');
 
             return $this->redirect($this->generateUrl('BloggerBlogBundle_blog_show', array(
-                 'id'    => $picture->getBlog()->getId(),
-                 'slug'  => $picture->getBlog()->getSlug()))
+                 'id'    => $blog->getId(),
+                 'slug'  => $blog->getSlug()))
             );
         }
         
@@ -163,7 +161,7 @@ class PostController extends Controller
         
         if ($form->isSubmitted()) {
             $em->flush();
-            $this->get('session')->getFlashBag()->add('post-notice', 'Your post was successfully edit post. Thank you!');
+            $this->get('session')->getFlashBag()->add('post-edit-notice', 'Your post was successfully edit. Choose new image or continue with previous');
             //Redirigir a editar imagen
             return $this->redirect($this->generateUrl('BloggerBlogBundle_edit_image_show', array(
                     'blog_id'    => $post->getId()

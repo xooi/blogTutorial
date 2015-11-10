@@ -7,14 +7,6 @@
     <header>
         <h1>Post in symblog</h1>
     </header>
-
-    {% for flashMessage in app.session.flashbag.get('post-notice') %}
-    {{ flashMessage }}
-    {% endfor %}
-    
-    {% for flashMessage in app.session.flashbag.get('picture-notice') %}
-    {{ flashMessage }}
-    {% endfor %}
     
     <p>Want to post in symblog?</p>
     {% include 'BloggerBlogBundle:Post:form.html.twig' with { 'post_form': post_form} %}

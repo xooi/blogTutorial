@@ -7,11 +7,11 @@
     <header>
         <h1>First upload image in symblog</h1>
     </header>
-
-    {% for flashMessage in app.session.flashbag.get('picture-notice') %}
+    
+    {% for flashMessage in app.session.flashbag.get('post-notice') %}
     {{ flashMessage }}
     {% endfor %}
     
-    <p>Select a photo for your post</p>
+    <p>Now select a photo for your post</p>
     {% include 'BloggerBlogBundle:Image:form.html.twig' with { 'picture_form': picture_form } %}
 {% endblock %}

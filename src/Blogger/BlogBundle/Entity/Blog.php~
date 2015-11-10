@@ -363,4 +363,27 @@ class Blog
         return $this->slug;
     }
     
+
+    /**
+     * Add image
+     *
+     * @param \Blogger\BlogBundle\Entity\Picture $image
+     * @return Blog
+     */
+    public function addImage(\Blogger\BlogBundle\Entity\Picture $image)
+    {
+        $this->image[] = $image;
+
+        return $this;
+    }
+
+    /**
+     * Remove image
+     *
+     * @param \Blogger\BlogBundle\Entity\Picture $image
+     */
+    public function removeImage(\Blogger\BlogBundle\Entity\Picture $image)
+    {
+        $this->image->removeElement($image);
+    }
 }
