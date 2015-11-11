@@ -112,7 +112,7 @@ class PostController extends Controller
     {
         //obtengo el picture_id para poder borrar la foto antigua
         $em = $this->getDoctrine()->getManager();
-        $blog = $em->getRepository('BloggerBlogBundle:Blog')->find($blog_id);       
+        $blog = $em->getRepository('BloggerBlogBundle:Blog')->find($blog_id);
         $picture_id = $blog->getImage()->getId();       
         
         
@@ -121,9 +121,10 @@ class PostController extends Controller
         $em->remove($pictureOld);
         $em->flush();
               
-
+        //nueva imagen
         $picture  = new Picture();
-        //seteo el blog para relacionarlo
+        //seteo la imagen al blog y el blog a la imagen para relacionarlo
+        $blog->setImage($picture);
         $picture->setBlog($blog);
         $picture_form = $this->createForm(new PictureType(), $picture);
         $request = $this->getRequest();
@@ -132,6 +133,7 @@ class PostController extends Controller
         if ($picture_form->isValid()) {
             $em->persist($picture);
             $em->flush();
+            
             
             $this->get('session')->getFlashBag()->add('picture-notice', 'Your picture was successfully updated. Thank you!');
 
