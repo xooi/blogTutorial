@@ -4,6 +4,9 @@
 namespace Blogger\BlogBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -39,7 +42,7 @@ class Picture
      * Image file
      *
      * @var File
-     *
+     * @Assert\NotBlank
      * @Assert\File(
      *     maxSize = "6M",
      *     mimeTypes = {"image/jpeg", "image/gif", "image/png"},
@@ -54,6 +57,13 @@ class Picture
      * @ORM\JoinColumn(name="blog_id", referencedColumnName="id")
      **/
     protected $blog;
+    
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('name', new NotBlank(array(
+            'message' => 'You must enter a name'
+        )));
+    }
   
 
     /**
