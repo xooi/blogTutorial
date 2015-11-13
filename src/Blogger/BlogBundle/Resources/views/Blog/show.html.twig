@@ -19,6 +19,12 @@
                     <a href="{{ path('BloggerBlogBundle_edit_post', { 'blog_id' : blog.id }) }}">Editar</a>   {# pasar id del blog para mostrar formulario del blog relleno con ese post #} 
             </div>
         {# añado botón editar #}
+        
+        {# añado botón borrarr #}
+           <div class="continue">
+                    <a href="{{ path('BloggerBlogBundle_delete_post', { 'blog_id' : blog.id }) }}">Borrar</a> 
+            </div>
+        {# añado botón borrar #}
             <section class="comments" id="comments">
         <section class="previous-comments">
             <h3>Comments</h3>

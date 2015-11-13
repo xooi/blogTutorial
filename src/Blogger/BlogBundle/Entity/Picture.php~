@@ -196,7 +196,9 @@ class Picture
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $date = date('Y_m_d-H-i-s');
+        
+        $this->name = $name . $date;
 
         return $this;
     }

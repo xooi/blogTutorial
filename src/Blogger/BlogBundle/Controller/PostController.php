@@ -178,6 +178,32 @@ class PostController extends Controller
         
     }
     
+    public function delete_postAction($blog_id)
+    {
+        //obtengo el picture_id para poder borrar la foto antigua
+        $em = $this->getDoctrine()->getManager();
+        $blog = $em->getRepository('BloggerBlogBundle:Blog')->find($blog_id);
+        $picture_id = $blog->getImage()->getId();       
+        
+        
+        //obtengo la foto y la borro
+        $pictureOld = $em->getRepository('BloggerBlogBundle:Picture')->findOneById($picture_id);
+        $em->remove($pictureOld);
+        $em->flush();
+        
+        //ahora borro el post
+        $em->remove($blog);
+        $em->flush();
+        
+        //vuelvo al home
+        $blogs = $em->getRepository('BloggerBlogBundle:Blog')
+                    ->getLatestBlogs();
+  
+        return $this->render('BloggerBlogBundle:Page:index.html.twig', array(
+            'blogs' => $blogs
+        ));
+    }
+    
     
     protected function getBlog($blog_id)
     {

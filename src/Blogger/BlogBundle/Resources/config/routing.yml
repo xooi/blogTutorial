@@ -41,8 +41,7 @@ BloggerBlogBundle_create_post:
   path:  /create_post/
   defaults: { _controller: BloggerBlogBundle:Post:create_post }
   requirements:
-      _methods:  GET|POST
-      picture_id: \d+   
+      _methods:  GET|POST   
       
 BloggerBlogBundle_upload_image:
   path:  /upload_image/{blog_id}
@@ -66,4 +65,11 @@ BloggerBlogBundle_edit_image:
   path:  /edit_image/{blog_id}
   defaults: { _controller: BloggerBlogBundle:Post:edit_image }
   requirements:
-      _methods:  POST       
+      _methods:  POST    
+      
+BloggerBlogBundle_delete_post:
+  path:  /delete_post/{blog_id}
+  defaults: { _controller: BloggerBlogBundle:Post:delete_post }
+  requirements:
+      _methods:  GET|POST
+      blog_id: \d+ 

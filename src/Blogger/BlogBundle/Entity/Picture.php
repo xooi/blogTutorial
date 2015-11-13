@@ -196,7 +196,10 @@ class Picture
      */
     public function setName($name)
     {
-        $this->name = $name;
+        //concatena nombre y fecha para que no hayan 2 iguales
+        $date = date('Y_m_d-H-i-s');
+        
+        $this->name = $name . $date;
 
         return $this;
     }
