@@ -1,17 +1,31 @@
 function initAjaxForm()
 {
-    $('input[type="submit"]').click(function () {
-    $('#form').submit(function(e){
+    $('body').on('submit', '.ajaxForm', function (e) {
+ 
         e.preventDefault();
-        $(this).ajaxSubmit(
-        {
-            url: "{{ path('add_contact') }}",
-            type: "POST",
-            success: function (result)
-            {
-               $('#form_body').html(result);
+ 
+        $.ajax({
+            type: $(this).attr('method'),
+            url: $(this).attr('action'),
+            data: $(this).serialize()
+        })
+        .done(function (data) {
+            if (typeof data.message !== 'undefined') {
+                alert(data.message);
             }
+        })
+        .fail(function (jqXHR, textStatus, errorThrown) {
+            if (typeof jqXHR.responseJSON !== 'undefined') {
+                if (jqXHR.responseJSON.hasOwnProperty('form')) {
+                    $('#form_body').html(jqXHR.responseJSON.form);
+                }
+ 
+                $('.post_form').html(jqXHR.responseJSON.message);
+ 
+            } else {
+                alert(errorThrown);
+            }
+ 
         });
     });
-});
 }
