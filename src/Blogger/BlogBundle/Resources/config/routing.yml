@@ -73,3 +73,23 @@ BloggerBlogBundle_delete_post:
   requirements:
       _methods:  GET|POST
       blog_id: \d+ 
+
+#####################################################################      
+      
+BloggerBlogBundle_demo_new:
+  path:  /demo_new
+  defaults: { _controller: BloggerBlogBundle:Demo:new }
+  requirements:
+      _methods:  GET
+      
+BloggerBlogBundle_demo_create:
+  path:  /demo_create
+  defaults: { _controller: BloggerBlogBundle:Demo:create }
+  requirements:
+      _methods:  POST
+
+#BloggerBlogBundle_demo_contact:
+#    path:  /contactajax
+#    defaults: { _controller: BloggerBlogBundle:Demo:contactajax }
+#    requirements:
+#        methods:  GET|POST

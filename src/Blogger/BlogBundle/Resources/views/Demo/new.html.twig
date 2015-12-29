@@ -1,0 +1,25 @@
+{# src/Blogger/BlogBundle/Resources/views/Post/show.html.twig #}
+{% extends 'BloggerBlogBundle::base.html.twig' %}
+
+
+{% block body -%}
+    <h1>Demo creation</h1>
+ 
+    <div class="post_form"></div>
+    <form method="POST" class="ajaxForm" action="{{path('BloggerBlogBundle_demo_create')}}" {{ form_enctype(post_form) }}>
+        <div id="post_form">
+            {% include 'BloggerBlogBundle:Demo:form.html.twig' with {'post_form': post_form} %}
+        </div>
+ 
+{% endblock %}
+ 
+ 
+{% block javascripts %}
+    {% javascripts 'AppBundle/Resources/public/js/*' %}
+        <script type="text/javascript" src="{{ asset_url }}" ></script>
+        <script>
+        initAjaxForm();
+        </script>
+    {% endjavascripts %}
+{% endblock %}
+
